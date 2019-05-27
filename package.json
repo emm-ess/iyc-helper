@@ -1,34 +1,114 @@
 {
-  "name": "iyc-helper",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "core-js": "^2.6.5",
-    "register-service-worker": "^1.6.2",
-    "vue": "^2.6.10",
-    "vue-class-component": "^7.0.2",
-    "vue-property-decorator": "^8.1.0",
-    "vue-router": "^3.0.3",
-    "vuex": "^3.0.1"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.8.0",
-    "@vue/cli-plugin-eslint": "^3.8.0",
-    "@vue/cli-plugin-pwa": "^3.8.0",
-    "@vue/cli-plugin-typescript": "^3.8.0",
-    "@vue/cli-service": "^3.8.0",
-    "@vue/eslint-config-typescript": "^4.0.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "node-sass": "^4.9.0",
-    "sass-loader": "^7.1.0",
-    "typescript": "^3.4.3",
-    "vue-template-compiler": "^2.6.10"
-  }
+    "name": "iyc-helper",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint"
+    },
+    "dependencies": {
+        "axios": "^0.18.0",
+        "cheerio": "^1.0.0-rc.3",
+        "core-js": "^2.6.5",
+        "register-service-worker": "^1.6.2",
+        "vue": "^2.6.10",
+        "vue-class-component": "^7.1.0",
+        "vue-property-decorator": "^8.1.1",
+        "vue-router": "^3.0.6",
+        "vuex": "^3.1.1"
+    },
+    "devDependencies": {
+        "@ascendancyy/vue-cli-plugin-stylelint": "^1.1.2",
+        "@types/cheerio": "^0.22.11",
+        "@vue/cli-plugin-babel": "^3.8.0",
+        "@vue/cli-plugin-eslint": "^3.8.0",
+        "@vue/cli-plugin-pwa": "^3.8.0",
+        "@vue/cli-plugin-typescript": "^3.8.1",
+        "@vue/cli-service": "^3.8.0",
+        "@vue/eslint-config-standard": "^4.0.0",
+        "@vue/eslint-config-typescript": "^4.0.0",
+        "autoprefixer": "^9.5.1",
+        "babel-eslint": "^10.0.1",
+        "eslint": "^5.16.0",
+        "eslint-plugin-vue": "^5.2.2",
+        "husky": "^2.3.0",
+        "jpegoptim-bin": "^5.1.0",
+        "lint-staged": "^8.1.7",
+        "node-sass": "^4.12.0",
+        "optipng-bin": "^6.0.0",
+        "postcss-clean": "^1.1.0",
+        "postcss-flexbugs-fixes": "^4.1.0",
+        "postcss-sass": "^0.3.5",
+        "sass-loader": "^7.1.0",
+        "stylelint": "^10.0.1",
+        "stylelint-config-outside-in-order": "0.0.1",
+        "stylelint-config-sass-guidelines": "^6.0.0",
+        "stylelint-config-standard": "^18.3.0",
+        "stylelint-scss": "^3.6.1",
+        "stylelint-webpack-plugin": "^0.10.5",
+        "svgo": "^1.2.2",
+        "svgo-loader": "^2.2.0",
+        "typescript": "^3.4.5",
+        "vue-cli-plugin-svg-sprite": "^1.0.0",
+        "vue-svg-inline-loader": "^1.2.15",
+        "vue-template-compiler": "^2.6.10"
+    },
+    "postcss": {
+        "plugins": {
+            "autoprefixer": {},
+            "postcss-flexbugs-fixes": {},
+            "postcss-clean": {}
+        }
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not ie <= 10"
+    ],
+    "husky": {
+        "hooks": {
+            "pre-commit": "node git-scripts/check_merge_commit.js && lint-staged && git-scripts/imagemin.sh --staged"
+        }
+    },
+    "lint-staged": {
+        "linters": {
+            "*.{vue,ts,tsx}": "vue-cli-service lint --cache",
+            "*.{vue,css,sss,less,scss,sass}": "vue-cli-service lint:style --no-fix"
+        }
+    },
+    "stylelint": {
+        "syntax": "postcss-sass",
+        "plugins": [
+            "stylelint-scss"
+        ],
+        "extends": [
+            "stylelint-config-standard",
+            "stylelint-config-sass-guidelines",
+            "stylelint-config-outside-in-order"
+        ],
+        "rules": {
+            "block-opening-brace-space-before": null,
+            "block-opening-brace-space-after": null,
+            "block-closing-brace-space-before": null,
+            "block-closing-brace-newline-before": null,
+            "declaration-block-trailing-semicolon": null,
+            "indentation": 4,
+            "number-leading-zero": null,
+            "font-family-name-quotes": "always-where-recommended",
+            "string-quotes": "single",
+            "at-rule-no-vendor-prefix": true,
+            "media-feature-name-no-vendor-prefix": true,
+            "property-no-vendor-prefix": true,
+            "selector-no-vendor-prefix": true,
+            "value-no-vendor-prefix": true,
+            "max-nesting-depth": 4,
+            "selector-max-id": 1,
+            "selector-no-qualifying-type": null,
+            "max-empty-lines": 3,
+            "no-descending-specificity": null,
+            "font-family-no-missing-generic-family-keyword": null
+        },
+        "root": true
+    }
 }
