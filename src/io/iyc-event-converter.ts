@@ -8,7 +8,6 @@ import {
     DEFAULT_CATEGORY,
 } from '@/constants'
 
-const DATE_FORMAT = 'YYYY-MM-DD HH.mm'
 
 
 export function deserialize(serialized: IYC.SerializedEvent): IYC.Event{
@@ -33,15 +32,18 @@ function deserializeDates(serialized: IYC.SerializedEventDate){
         }
     }
 
-    const timeslot = serialized.timeslot
-    if (timeslot) {
-        const day = DAYS[timeslot.day]
-        date.timeslo = {
-            day,
-            start: convertTime(day.date, timeslot.start),
-            end: convertTime(day.date, timeslot.end),
-        }
+    date.timeslot = deserializeTimeslot(serialized.timeslot)
+}
+
+function deserializeTimeslot(serialized: IYC.SerializedTimeslot){
+    if (!serialized) {
+        return
     }
+
+    const timeslot: any = Object.assign({}, serialized)
+    const day = timeslot.day = DAYS[timeslot.day]
+    timeslot.startTime = convertSlotToTime(day, timeslot.start)
+    timeslot.endTime = convertSlotToTime(day, timeslot.end)
 }
 
 export function serialize(event: IYC.Event): IYC.SerializedEvent{
@@ -65,17 +67,20 @@ function serializeDates(date: IYC.EventDate){
             detail: location.detail,
         }
     }
-
-    const timeslot = date.timeslot
-    if (timeslot) {
-        serialized.timeslot = {
-            day: timeslot.day.id,
-            start: timeslot.start.format(DATE_FORMAT),
-            end: timeslot.end.format(DATE_FORMAT),
-        }
-    }
+    serialized.timeslot = serializeTimeslot(date.timeslot)
 
     return serialized
+}
+
+function serializeTimeslot(timeslot?: IYC.Timeslot){
+    if (!timeslot) {
+        return
+    }
+    return {
+        day: timeslot.day.id,
+        start: timeslot.start,
+        end: timeslot.end,
+    }
 }
 
 export function convertCategory(catId: number){
@@ -121,13 +126,40 @@ export function convertTimeslot(rawDay: string, rawStart: string, rawEnd: string
     if (!day) {
         throw new Error(`Couldn't convert event day: ${rawDay}`)
     }
+
+    const start = convertRawTime(day.date, rawStart)
+    const end = convertRawTime(day.date, rawEnd)
+
     return {
         day,
-        start: convertTime(day.date, rawStart),
-        end: convertTime(day.date, rawEnd),
+        start: start.slot,
+        end: end.slot,
+        startTime: start.time,
+        endTime: end.time,
     }
 }
 
-function convertTime(date: string, time: string){
-    return (moment as any)(`${date} ${time}`, DATE_FORMAT)
+const DATE_FORMAT = 'YYYY-MM-DD HH.mm'
+function convertRawTime(date: string, rawTime: string){
+    const split = rawTime.split('.')
+    return {
+        slot: convertTimeToSlot(split[0], split[1]),
+        time: (moment as any)(`${date} ${rawTime}`, DATE_FORMAT),
+    }
+}
+
+function convertTimeToSlot(h: string|number, m: string|number){
+    if (typeof h === 'string') {
+        h = parseInt(h)
+    }
+    if (typeof m === 'string') {
+        m = parseInt(m)
+    }
+    return h * 4 + (m / 15)
+}
+
+function convertSlotToTime(day: IYC.Day, slot: number){
+    const h = Math.floor(slot / 4)
+    const m = (slot - (h * 4)) * 15
+    return (moment as any)(`${day.date} ${h}.${m}`, DATE_FORMAT)
 }

@@ -51,14 +51,16 @@ declare namespace IYC {
 
     interface Timeslot {
         day: Day
-        start: any
-        end: any
+        start: number
+        end: number
+        startTime: any
+        endTime: any
     }
 
-    interface SerializedTimeSlot {
+    interface SerializedTimeslot {
         day: number
-        start: string
-        end: string
+        start: number
+        end: number
     }
 
     interface Category {
