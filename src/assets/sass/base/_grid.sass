@@ -1,0 +1,50 @@
+.container
+    width: 100%
+    max-width: $container-max-width-actual
+    margin: 0 auto
+    padding: 0 $container-padding
+
+    +breakpoint-up(lg)
+        padding: 0 $container-padding-lg
+
+.grid
+    display: flex
+    flex-flow: row wrap
+    justify-content: flex-start
+    margin-right: - $grid-half-gutter !important
+    margin-left: - $grid-half-gutter !important
+
+    .column
+        flex: 0 0 auto
+        width: calc(100% - #{$grid-gutter})
+        margin-right: $grid-half-gutter
+        margin-left: $grid-half-gutter
+
+        +column-classes(none)
+        +half-column-classes(none)
+        +offset-classes(none, left)
+        +offset-classes(none, right)
+        +half-offset-classes(none, left)
+        +half-offset-classes(none, right)
+
+        @each $breakpoint in map-keys($breakpoints)
+            +breakpoint-up($breakpoint)
+                +column-classes($breakpoint)
+                +half-column-classes($breakpoint)
+                +offset-classes($breakpoint, left)
+                +offset-classes($breakpoint, right)
+                +half-offset-classes($breakpoint, left)
+                +half-offset-classes($breakpoint, right)
+
+        /* stylelint-disable-line indentation */
+        &.single-row-item
+            &::after
+                display: block
+                content: ''
+
+    /* stylelint-disable-line indentation */
+    &.is-gapless
+        margin: 0
+
+        > .column
+            margin: 0

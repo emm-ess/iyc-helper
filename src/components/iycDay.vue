@@ -3,7 +3,7 @@
         <h2>{{ day.title.de }}</h2>
         <time-table :data="ttData"/>
 
-        <h3>Den ganzen Tag</h3>
+        <!-- <h3>Den ganzen Tag</h3>
         <ul>
             <li v-for="location in allDayLocations"
                     :key="location.id">
@@ -16,7 +16,7 @@
                     </li>
                 </ul>
             </li>
-        </ul>
+        </ul> -->
     </div>
 </template>
 

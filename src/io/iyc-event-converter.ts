@@ -115,11 +115,12 @@ export function convertLocation(rawLocation: string): IYC.Location{
             detail = rawLocation
             break
         case 8: case 9: case 10: case 11:
-            detail = match['detail']
+            detail = match.groups.detail
             break
         default:
             break
     }
+
     const id = detail ? hash(main.id + detail) : hash('' + main.id)
     const events = {always: [], specific: []}
     return {id, main, detail, events}

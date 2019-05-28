@@ -1,0 +1,17 @@
+=breakpoint-down($point)
+    @if map-has-key($breakpoints, $point)
+        $size: map-get($breakpoints, $point)
+
+        @media screen and (max-width: #{$size - 0.02})
+            @content
+    @else
+        @warn 'Unfortunately, no value could be retrieved for `#{$point}`. '
+
+=breakpoint-up($point)
+    @if map-has-key($breakpoints, $point)
+        $size: map-get($breakpoints, $point)
+
+        @media screen and (min-width: #{$size})
+            @content
+    @else
+        @warn 'Unfortunately, no value could be retrieved for `#{$point}`. '

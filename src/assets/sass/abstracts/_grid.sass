@@ -1,0 +1,68 @@
+$grid-column-count: 12 !default
+$grid-gutter: 10px !default
+$grid-half-gutter: $grid-gutter / 2
+$grid-allow-half-columns: true !default
+
+@function calcGridWidth($column-count)
+    $percentage: percentage($column-count / $grid-column-count)
+    @return calc(#{$percentage} - #{$grid-gutter})
+
+=column-classes($size: none)
+    @for $i from 1 through $grid-column-count
+        $width: calcGridWidth($i)
+
+        @if $size != none
+            &.is-#{$i}-#{$size}
+                width: $width
+        @else
+            &.is-#{$i}
+                width: $width
+
+=half-column-classes($size)
+    @for $i from 0 through $grid-column-count - 1
+        $width: calcGridWidth($i)
+
+        @if $size != none
+            &.is-#{$i}-half-#{$size}
+                width: $width
+        @else
+            &.is-#{$i}-half
+                width: $width
+
+=offset-classes($size, $side)
+    @for $i from 1 through $grid-column-count - 6
+        $percentage: percentage($i / $grid-column-count)
+        $margin: calc(#{$percentage} + (#{$grid-gutter} / 2))
+
+        @if $size != none
+            &.is-offset-#{$side}-#{$i}-#{$size}
+                margin-#{$side}: $margin
+        @else
+            &.is-offset-#{$side}-#{$i}
+                margin-#{$side}: $margin
+
+=half-offset-classes($size, $side)
+    @for $i from 0 through $grid-column-count - 6
+        $percentage: percentage(($i + .5) / $grid-column-count)
+        $margin: calc(#{$percentage} + (#{$grid-gutter} / 2))
+
+        @if $size != none
+            &.is-offset-#{$side}-#{$i}-half-#{$size}
+                margin-#{$side}: $margin
+        @else
+            &.is-offset-#{$side}-#{$i}-half
+                margin-#{$side}: $margin
+
+@function inner-column($inner-count, $outer-count, $additional-padding: 0px)
+    $factor: $inner-count / $outer-count
+    // sub pixel error seems to be way better when working mit ceiled values
+    $total-gap-size: ceil(($outer-count - 1) * $grid-gutter * $factor)
+    $used-gap-size: ($inner-count - 1) * $grid-gutter
+    $padding-correction: - ceil($additional-padding * $factor) + ($additional-padding / 2)
+    $pixels: $total-gap-size - $used-gap-size + $padding-correction
+    @if $pixels == 0px
+        @return percentage($factor)
+    @else if $pixels < 0px
+        @return calc(#{percentage($factor)} + #{-1 * $pixels})
+    @else
+        @return calc(#{percentage($factor)} - #{$pixels})

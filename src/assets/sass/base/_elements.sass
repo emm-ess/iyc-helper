@@ -1,0 +1,130 @@
+*,
+*::before,
+*::after
+    box-sizing: border-box
+
+html
+    -webkit-font-smoothing: antialiased
+    -moz-osx-font-smoothing: grayscale
+    font-family: sans-serif
+    line-height: 1.15
+    text-size-adjust: 100%
+    -webkit-tap-highlight-color: rgba($black, 0)
+
+body
+    margin: 0
+    overflow-x: hidden
+    color: $color-text
+    background: $white
+    font-family: $font-family-base
+    font-size: $font-size-base
+    font-weight: $font-weight-base
+    line-height: $line-height-base
+    text-align: left
+
+article,
+aside,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section
+    display: block
+
+figure
+    margin: 0 0 1rem
+
+svg,
+img
+    max-width: 100%
+    max-height: 100%
+
+img
+    border-style: none
+    vertical-align: middle
+
+svg
+    overflow: hidden
+    fill: currentColor
+    vertical-align: middle
+
+svg:not(:root)
+    overflow: hidden
+
+[tabindex='-1']:focus
+    outline: 0 !important
+
+hr
+    box-sizing: content-box
+    height: 0
+    overflow: visible
+
+abbr[title],
+abbr[data-original-title]
+    border-bottom: 0
+    cursor: help
+    text-decoration: underline
+    text-decoration: underline dotted
+    text-decoration-skip-ink: none
+
+address
+    margin-bottom: 1rem
+    font-style: normal
+    line-height: inherit
+
+ol,
+ul,
+dl
+    margin: 0
+    padding: 0
+    list-style: none
+
+ol ol,
+ul ul,
+ol ul,
+ul ol
+    margin-bottom: 0
+
+dt
+    font-weight: $dt-font-weight
+
+dd
+    margin-bottom: .5rem
+    margin-left: 0
+
+blockquote
+    margin: 0 0 1rem
+
+pre
+    margin-top: 0
+    margin-bottom: 1rem
+    overflow: auto
+
+table
+    border-collapse: collapse
+
+caption
+    padding-top: $table-cell-padding
+    padding-bottom: $table-cell-padding
+    color: $color-table-caption
+    caption-side: bottom
+    text-align: left
+
+th
+    text-align: inherit
+
+output
+    display: inline-block
+
+summary
+    display: list-item
+    cursor: pointer
+
+template
+    display: none
+
+[hidden]
+    display: none !important

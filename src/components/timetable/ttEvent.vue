@@ -1,6 +1,6 @@
 <template>
-    <li class="tt-event">
-        {{ event.title }} | {{ event.dates[0].timeslot.start }} | {{ event.dates[0].timeslot.end }}
+    <li class="tt-event" :style="style">
+        <span>{{ event.title }}</span>
     </li>
 </template>
 
@@ -10,11 +10,34 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 @Component
 export default class TtEvent extends Vue {
     @Prop({type: Object, required: true}) event!: IYC.Event
+    @Prop({type: Object, required: true}) timeFrame!: IYC.TTTimeFrame
+
+    get style(){
+        const timeFrame = this.timeFrame
+        const timeslot = this.event.dates[0].timeslot as IYC.Timeslot
+        const duration = timeslot.end - timeslot.start
+
+        return {
+            top: `${100 * (timeslot.start - timeFrame.start) / timeFrame.duration}%`,
+            height: `${100 * duration / timeFrame.duration}%`,
+        }
+    }
 }
 </script>
 
 
 
 <style scoped lang="sass">
-// not empty
+.tt-event
+    position: absolute
+    display: block
+    width: 100%
+    background: #999
+
+    span
+        display: block
+        max-height: 100%
+        padding: 5px
+        overflow: hidden
+        text-overflow: ellipsis
 </style>

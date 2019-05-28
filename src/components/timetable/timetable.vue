@@ -1,15 +1,25 @@
 <template>
     <div class="timetable">
-        <div class="tt-times">
-            {{ timeFrame }}
+        <div class="tt-times-wrapper">
+            <div class="tt-times">
+                <span class="tt-mark"
+                        v-for="timeMark in timeMarks"
+                        :key=timeMark>
+                    {{ timeMark }}
+                </span>
+            </div>
         </div>
 
-        <ul class="tt-columns">
-            <tt-column
-                    v-for="item in data"
-                    :key="item.location.id"
-                    :data="item"/>
-        </ul>
+        <div class="tt-columns-wrapper">
+            <ul class="tt-columns"
+                    :style="columnsStyle">
+                <tt-column
+                        v-for="item in columns"
+                        :key="item.location.id"
+                        :data="item"
+                        :time-frame="timeFrame"/>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -28,8 +38,12 @@ import TtColumn from './ttColumn.vue'
 export default class TimeTable extends Vue {
     @Prop({type: Array, required: true}) data!: IYC.TimeTableData
 
+    get columns(){
+        return this.data.sort((a, b) => a.location.main.id - b.location.main.id)
+    }
+
     get timeFrame(){
-        const startValues = {start: MAX_TIME_SLOTS_DAY, end: 0}
+        const startValues: any = {start: MAX_TIME_SLOTS_DAY, end: 0}
         function reducer(acc: any, cur: any){
             return {
                 start: Math.min(acc.start, cur.start),
@@ -37,9 +51,28 @@ export default class TimeTable extends Vue {
             }
         }
 
-        return this.data.map((data) => data.events).flat()
+        const timeFrame = this.data.map((data) => data.events).flat()
             .map((event: IYC.Event) => event.dates[0].timeslot)
             .reduce(reducer, startValues)
+
+        timeFrame.duration = timeFrame.end - timeFrame.start
+        return timeFrame
+    }
+
+    get columnsStyle(){
+        return {
+            height: `calc(${this.timeFrame.duration * 20}px + 3rem)`,
+        }
+    }
+
+    get timeMarks(){
+        const timeMarks: number[] = []
+        const {start, end} = this.timeFrame
+
+        for (let slot = start; slot < end; slot += 4) {
+            timeMarks.push(Math.floor(slot / 4))
+        }
+        return timeMarks
     }
 }
 </script>
@@ -47,5 +80,43 @@ export default class TimeTable extends Vue {
 
 
 <style scoped lang="sass">
-// not empty
+.timetable
+    display: flex
+    flex-direction: row
+
+.tt-times-wrapper
+    flex: 1 0 auto
+    width: 100px
+    padding: 3rem 0 0
+
+.tt-mark
+    position: relative
+    display: block
+    height: 80px
+
+    &::before,
+    &::after
+        position: absolute
+        left: 0
+        display: block
+        content: ''
+        width: 100vw
+        height: 1px
+
+    &::before
+        top: 0
+        background: #666
+
+    &::after
+        top: 50%
+        background: #999
+
+.tt-columns-wrapper
+    flex: 0 1 auto
+    width: calc(100% - 100px)
+    overflow: auto
+
+.tt-columns
+    display: flex
+    flex-direction: row
 </style>

@@ -122,4 +122,10 @@ declare namespace IYC {
         location: IYC.Location
         events: IYC.Event[]
     }
+
+    interface TTTimeFrame {
+        start: number
+        end: number
+        duration: number
+    }
 }
