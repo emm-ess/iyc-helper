@@ -52,3 +52,9 @@ export default class EventDateDetail extends Vue {
     }
 }
 </script>
+
+
+<style scoped lang="sass">
+.info
+    margin: 0 0 1.2em
+</style>

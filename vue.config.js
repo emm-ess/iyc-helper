@@ -20,15 +20,20 @@ module.exports = {
 
     // https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa#configuration
     pwa: {
-        themeColor: '#4DBA87',
-        msTileColor: '#000000',
+        name: 'IJT Programm',
+        themeColor: '#194a89',
+        msTileColor: '#194a89',
+        appleMobileWebAppCapable: true,
         appleMobileWebAppStatusBarStyle: 'default',
         // https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin
-        workboxPluginMode: 'InjectManifest',
+        workboxPluginMode: 'GenerateSW',
         workboxOptions: {
-            swSrc: 'service-worker.js',
+            importWorkboxFrom: 'local',
+            // swSrc: 'service-worker.js',
         },
     },
+
+
     chainWebpack: config => {
         // config.entry('service-worker')
         //     .add('./src/service-worker.ts')

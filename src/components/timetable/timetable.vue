@@ -95,8 +95,12 @@ export default class TimeTable extends Vue {
 
 <style scoped lang="sass">
 .timetable
+    position: relative
+    left: 50%
     display: flex
     flex-direction: row
+    width: 100vw
+    margin: 3rem -50vw 5rem
 
 .tt-times-wrapper
     flex: 1 0 auto

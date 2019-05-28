@@ -30,11 +30,16 @@ export default class TtEvent extends Vue {
 
 
 <style scoped lang="sass">
+$light-border: tint($color-event-link-background, 10%)
+$dark-border: shade($color-event-link-background, 10%)
+
 .tt-event
     position: absolute
     display: block
     width: 100%
     background: $color-event-link-background
+    border: 2px solid
+    border-color: $light-border $dark-border $dark-border $light-border
 
     a
         display: block

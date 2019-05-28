@@ -8,14 +8,7 @@
                 <small v-if="location.detail">{{ location.detail }}</small>
             </h2>
 
-            <ul class="permanent-events">
-                <li v-for="event in location.events.always"
-                        :key="event.id">
-                    <router-link :to="{name: 'detail', params: {id: event.id}}">
-                        {{ event.title }}
-                    </router-link>
-                </li>
-            </ul>
+            <event-list :events="location.events.always" />
         </div>
     </div>
 </template>
@@ -24,7 +17,13 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { State } from 'vuex-class'
 
-@Component
+import EventList from '@/components/EventList.vue'
+
+@Component({
+    components: {
+        EventList,
+    },
+})
 export default class Permanent extends Vue {
     @State locations!: IYC.Location[]
 
@@ -35,17 +34,3 @@ export default class Permanent extends Vue {
     }
 }
 </script>
-
-
-<style scoped lang="sass">
-.permanent-events
-    display: flex
-    flex-flow: row wrap
-
-    a
-        display: block
-        margin: .6em
-        padding: .6em
-        background: #efefef
-        border-radius: .3em
-</style>

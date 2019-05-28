@@ -15,7 +15,7 @@ import { hash } from '@/lib/helper'
 export function deserialize(serialized: IYC.SerializedEvent): IYC.Event{
     const event: any = {}
     Object.assign(event, serialized)
-    convertCategory(event.category)
+    event.category = convertCategory(event.category)
     event.dates = serialized.dates.map(deserializeDates)
     return event
 }
@@ -51,6 +51,7 @@ function deserializeTimeslot(serialized?: IYC.SerializedTimeslot){
     const day = timeslot.day = DAYS[timeslot.day]
     timeslot.startTime = convertSlotToTime(day, timeslot.start)
     timeslot.endTime = convertSlotToTime(day, timeslot.end)
+    return timeslot
 }
 
 export function serialize(event: IYC.Event): IYC.SerializedEvent{

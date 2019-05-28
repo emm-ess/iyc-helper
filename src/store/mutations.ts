@@ -36,11 +36,10 @@ export const mutations = {
                     stLocations.push(locationEntry)
                 }
 
-                if (event.dates[0].timeslot) {
-                    locationEntry.events.specific.push(event)
-                }
-                else {
-                    locationEntry.events.always.push(event)
+                const locEventArr = event.dates[0].timeslot ? locationEntry.events.specific : locationEntry.events.always
+                const finding = locEventArr.find((evEntry) => evEntry.id === id)
+                if (!finding) {
+                    locEventArr.push(event)
                 }
             })
         })
