@@ -11,14 +11,18 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { Action } from 'vuex-class'
+import { State, Action } from 'vuex-class'
+
+import { getLocations } from '@/lib/iyc-event-filter'
 
 @Component
 export default class Home extends Vue {
+    @State events!: IYC.Event[]
     @Action fetchIycData!: VoidFunction
 
-    created(){
-        this.fetchIycData()
+    async created(){
+        await this.fetchIycData()
+        getLocations(this.events)
     }
 }
 </script>

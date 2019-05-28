@@ -36,7 +36,7 @@ export const MAIN_LOCATIONS: IYC.MainLocation[] = [
 
 export const LOCATION_MAPPER: IYC.LocationMapper[] = [
     {id: 0, regex: {de: /(?<main>arena)/i}},
-    {id: 1, regex: {de: /(?<main>eingangsbereich|open-air|messegel&#xE4;nde|stra&#xDF;enmusik|bulli)/i}},
+    {id: 1, regex: {de: /(?<main>eingangsbereich|open-air|messegelände|straßenmusik|bulli)/i}},
     {id: 2, regex: {de: /(?<main>halle\s*5)/i}},
     {id: 3, regex: {de: /(?<main>halle\s*6)/i}},
     {id: 4, regex: {de: /(?<main>halle\s*7a)/i}},
@@ -45,7 +45,7 @@ export const LOCATION_MAPPER: IYC.LocationMapper[] = [
     {id: 7, regex: {de: /(?<main>halle\s*7\.0)/i}},
     {id: 8, regex: {de: /(?<main>halle\s*7\.1)(?:,*\s*)(?<detail>[\S\s]*)/i}},
     {id: 9, regex: {de: /(?<main>halle\s*7\.2)(?:,*\s*)(?<detail>[\S\s]*)/i}},
-    {id: 10, regex: {de: /(?<main>ccd-s&#xFC;d)(?:,*\s*)(?<detail>[\S\s]*)/i}},
+    {id: 10, regex: {de: /(?<main>ccd-süd)(?:,*\s*)(?<detail>[\S\s]*)/i}},
     {id: 11, regex: {de: /(?<main>ccd-ost)(?:,*\s*)(?<detail>[\S\s]*)/i}},
 ]
 
@@ -57,3 +57,5 @@ export const DAYS: IYC.Day[] = [
     {id: 2, date: '2019-06-01', title: {de: 'Samstag', en: ''}},
     {id: 3, date: '2019-06-02', title: {de: 'Sonntag', en: ''}},
 ]
+
+export const MAX_TIME_SLOTS_DAY = 24 * 4

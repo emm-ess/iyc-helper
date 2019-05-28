@@ -7,6 +7,7 @@ import {
     DAYS,
     DEFAULT_CATEGORY,
 } from '@/constants'
+import { hash } from '@/lib/helper'
 
 
 
@@ -26,16 +27,18 @@ function deserializeDates(serialized: IYC.SerializedEventDate){
 
     const location = serialized.location
     if (location) {
-        date.location = {
-            main: MAIN_LOCATIONS[serialized.location.main],
-            detail: serialized.location.detail,
-        }
+        const main = MAIN_LOCATIONS[serialized.location.main]
+        const detail = serialized.location.detail
+        const id = detail ? hash(main.id + detail) : hash('' + main.id)
+        const events = {always: [], specific: []}
+        date.location = {id, main, detail, events}
     }
 
     date.timeslot = deserializeTimeslot(serialized.timeslot)
+    return date
 }
 
-function deserializeTimeslot(serialized: IYC.SerializedTimeslot){
+function deserializeTimeslot(serialized?: IYC.SerializedTimeslot){
     if (!serialized) {
         return
     }
@@ -105,20 +108,21 @@ export function convertLocation(rawLocation: string): IYC.Location{
         throw new Error(`Couldn't map event location: ${rawLocation}`)
     }
 
-    const location: IYC.Location = {
-        main: MAIN_LOCATIONS[i],
-    }
+    const main = MAIN_LOCATIONS[i]
+    let detail: string | undefined
     switch (i) {
         case 1:
-            location.detail = rawLocation
+            detail = rawLocation
             break
         case 8: case 9: case 10: case 11:
-            location.detail = match['detail']
+            detail = match['detail']
             break
         default:
             break
     }
-    return location
+    const id = detail ? hash(main.id + detail) : hash('' + main.id)
+    const events = {always: [], specific: []}
+    return {id, main, detail, events}
 }
 
 export function convertTimeslot(rawDay: string, rawStart: string, rawEnd: string): IYC.Timeslot{
@@ -155,11 +159,11 @@ function convertTimeToSlot(h: string|number, m: string|number){
     if (typeof m === 'string') {
         m = parseInt(m)
     }
-    return h * 4 + (m / 15)
+    return Math.round(h * 4 + (m / 15))
 }
 
 function convertSlotToTime(day: IYC.Day, slot: number){
     const h = Math.floor(slot / 4)
-    const m = (slot - (h * 4)) * 15
+    const m = Math.round((slot - (h * 4)) * 15)
     return (moment as any)(`${day.date} ${h}.${m}`, DATE_FORMAT)
 }

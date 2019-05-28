@@ -1,18 +1,26 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/img/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
+    <div class="home">
+        <img alt="Vue logo" src="../assets/img/logo.png">
+        <iyc-day
+                v-for="day in days"
+                :key="day.id"
+                :day="day"/>
+    </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import HelloWorld from '@/components/HelloWorld.vue'
+
+import IycDay from '@/components/iycDay.vue'
+
+import { DAYS } from '@/constants'
 
 @Component({
     components: {
-        HelloWorld,
+        IycDay,
     },
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+    days = DAYS
+}
 </script>

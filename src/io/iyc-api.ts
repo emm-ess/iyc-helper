@@ -23,7 +23,7 @@ const REGEXS = {
 
 export async function getIycData(): Promise<IYC.Event[]>{
     const { data } = await axios.get('https://www.ijt2019.org/teilnehmen/programm')
-    const $ = cheerio.load(data)
+    const $ = cheerio.load(data, {normalizeWhitespace: true, decodeEntities: false})
     const events: IYC.RawEvent[] = []
     $('form + div.grid div.col_grid').each((index, ele) => {
         events.push(parseEventEle(ele))
@@ -100,8 +100,13 @@ function getDate({ timeslot, languages, location, booking }: IYC.RawEvent): IYC.
     return { timeslot, languages, location, booking }
 }
 
+function getHTML(ele: CheerioElement, selector?: string): string{
+    const $ = cheerio.load(ele, {decodeEntities: false})
+    return selector ? $('h3').html() as string : $.html()
+}
+
 function splitTitleLanguage(ele: CheerioElement){
-    const html = cheerio(ele).find('h3').html() as string
+    const html = getHTML(ele, 'h3')
     const matches = REGEXS.title.exec(html)
     if (!matches || matches.length !== 3) {
         throw new Error(`Couldn't parse event title: ${html}`)
@@ -132,7 +137,7 @@ function getCategory(ele: CheerioElement){
         return DEFAULT_CATEGORY
     }
 
-    const html = cheerio(ele).html() as string
+    const html = getHTML(ele)
     const matches = REGEXS.category.exec(html)
     if (!matches || matches.length !== 2) {
         throw new Error(`Couldn't parse event category: ${html}`)
@@ -152,7 +157,7 @@ function getSpeaker(eles: Cheerio){
 }
 
 function getLocation(ele: CheerioElement): IYC.Location{
-    const html = cheerio(ele).html() as string
+    const html = getHTML(ele)
     const matches = REGEXS.location.exec(html)
     if (!matches || matches.length !== 2) {
         throw new Error(`Couldn't parse event location: ${html}`)
@@ -161,7 +166,7 @@ function getLocation(ele: CheerioElement): IYC.Location{
 }
 
 function getBookingInfo(ele: CheerioElement){
-    const html = cheerio(ele).html() as string
+    const html = getHTML(ele)
     const matches = REGEXS.booking.exec(html)
     if (!matches || matches.length < 4) {
         return {

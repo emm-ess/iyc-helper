@@ -43,7 +43,7 @@ declare namespace IYC {
     }
 
     interface SerializedEventDate {
-        timeslot?: SerializedTimeSlot
+        timeslot?: SerializedTimeslot
         languages: Language[]
         location: SerializedLocation
         booking: BookingInfo
@@ -71,8 +71,13 @@ declare namespace IYC {
     type Language = 'DE' | 'EN' | 'FR' | 'RU' | 'ES' | 'IT'
 
     interface Location {
+        id: number
         main: MainLocation
         detail?: string
+        events: {
+            always: IYC.Event[]
+            specific: IYC.Event[]
+        }
     }
 
     interface SerializedLocation {
@@ -109,5 +114,12 @@ declare namespace IYC {
         id: number
         date: string
         title: TranslatedString
+    }
+
+    type TimeTableData = TTColumnData[]
+
+    interface TTColumnData {
+        location: IYC.Location
+        events: IYC.Event[]
     }
 }
