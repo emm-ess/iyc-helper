@@ -20,18 +20,18 @@ export const CATEGORIES: IYC.Category[] = [
 export const DEFAULT_CATEGORY = CATEGORIES[0]
 
 export const MAIN_LOCATIONS: IYC.MainLocation[] = [
-    {id: 0, title: {de: 'Arena', en: ''}},
-    {id: 1, title: {de: 'Outdoor', en: ''}},
-    {id: 2, title: {de: 'Halle 5', en: ''}},
-    {id: 3, title: {de: 'Halle 6', en: ''}},
-    {id: 4, title: {de: 'Halle 7a', en: ''}},
-    {id: 5, title: {de: 'Halle 8a', en: ''}},
-    {id: 6, title: {de: 'Halle 8b', en: ''}},
-    {id: 7, title: {de: 'Halle 7.0', en: ''}},
-    {id: 8, title: {de: 'Halle 7.1', en: ''}},
-    {id: 9, title: {de: 'Halle 7.2', en: ''}},
-    {id: 10, title: {de: 'CCD-Süd', en: ''}},
-    {id: 11, title: {de: 'CCD-Ost', en: ''}},
+    {id: 0, slug: 'arena', single: true, title: {de: 'Arena', en: ''}},
+    {id: 1, slug: 'outdoor', single: false, title: {de: 'Outdoor', en: ''}},
+    {id: 2, slug: 'halle-5', single: true, title: {de: 'Halle 5', en: ''}},
+    {id: 3, slug: 'halle-6', single: true, title: {de: 'Halle 6', en: ''}},
+    {id: 4, slug: 'halle-7a', single: true, title: {de: 'Halle 7a', en: ''}},
+    {id: 5, slug: 'halle-8a', single: true, title: {de: 'Halle 8a', en: ''}},
+    {id: 6, slug: 'halle-8b', single: true, title: {de: 'Halle 8b', en: ''}},
+    {id: 7, slug: 'halle-70', single: true, title: {de: 'Halle 7.0', en: ''}},
+    {id: 8, slug: 'halle-71', single: false, title: {de: 'Halle 7.1', en: ''}},
+    {id: 9, slug: 'halle-72', single: false, title: {de: 'Halle 7.2', en: ''}},
+    {id: 10, slug: 'ccd-sued', single: false, title: {de: 'CCD-Süd', en: ''}},
+    {id: 11, slug: 'ccd-ost', single: false, title: {de: 'CCD-Ost', en: ''}},
 ]
 
 export const LOCATION_MAPPER: IYC.LocationMapper[] = [
@@ -52,10 +52,10 @@ export const LOCATION_MAPPER: IYC.LocationMapper[] = [
 export const LANGUAGES: IYC.Language[] = ['DE', 'EN', 'FR', 'RU', 'ES', 'IT']
 
 export const DAYS: IYC.Day[] = [
-    {id: 0, date: '2019-05-30', title: {de: 'Donnerstag', en: ''}},
-    {id: 1, date: '2019-05-31', title: {de: 'Freitag', en: ''}},
-    {id: 2, date: '2019-06-01', title: {de: 'Samstag', en: ''}},
-    {id: 3, date: '2019-06-02', title: {de: 'Sonntag', en: ''}},
+    {id: 0, date: '2019-05-30', slug: 'donnerstag', title: {de: 'Donnerstag', en: ''}},
+    {id: 1, date: '2019-05-31', slug: 'freitag', title: {de: 'Freitag', en: ''}},
+    {id: 2, date: '2019-06-01', slug: 'samstag', title: {de: 'Samstag', en: ''}},
+    {id: 3, date: '2019-06-02', slug: 'sonntag', title: {de: 'Sonntag', en: ''}},
 ]
 
 export const MAX_TIME_SLOTS_DAY = 24 * 4

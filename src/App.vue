@@ -11,29 +11,15 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { State, Action } from 'vuex-class'
-
-import { getLocations } from '@/lib/iyc-event-filter'
 
 @Component
 export default class Home extends Vue {
-    @State events!: IYC.Event[]
-    @Action fetchIycData!: VoidFunction
-
-    async created(){
-        await this.fetchIycData()
-        getLocations(this.events)
-    }
 }
 </script>
 
 <style lang="sass">
 #app
     color: #2c3e50
-    font-family: Avenir, Helvetica, Arial, sans-serif
-    -webkit-font-smoothing: antialiased
-    -moz-osx-font-smoothing: grayscale
-    text-align: center
 
 #nav
     padding: 30px

@@ -2,21 +2,6 @@
     <div class="day">
         <h2>{{ day.title.de }}</h2>
         <time-table :data="ttData"/>
-
-        <!-- <h3>Den ganzen Tag</h3>
-        <ul>
-            <li v-for="location in allDayLocations"
-                    :key="location.id">
-                {{ location.main.title.de }}
-
-                <ul>
-                    <li v-for="event in location.events.always"
-                            :key="event.id">
-                        {{ event.title }}
-                    </li>
-                </ul>
-            </li>
-        </ul> -->
     </div>
 </template>
 
@@ -24,6 +9,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
 
+import { DAYS } from '@/constants'
 import { filterByDay } from '@/lib/iyc-event-filter'
 
 import TimeTable from '@/components/timetable/timetable.vue'
@@ -33,9 +19,21 @@ import TimeTable from '@/components/timetable/timetable.vue'
         TimeTable,
     },
 })
-export default class IcyDay extends Vue {
-    @Prop({type: Object, required: true}) day!: IYC.Day
+export default class Day extends Vue {
+    @Prop({type: String, required: true}) slug!: string
     @Getter getLocationsForDay!: any
+
+    day!: IYC.Day
+
+    created(){
+        const day = DAYS.find((day) => day.slug === this.slug)
+        if (day) {
+            this.day = day
+        }
+        else {
+            this.$router.replace('/')
+        }
+    }
 
     get locations(): IYC.Location[]{
         return this.getLocationsForDay(this.day)
@@ -48,12 +46,6 @@ export default class IcyDay extends Vue {
                 events: filterByDay(location.events.specific, this.day),
             }
         }).filter(({events}: IYC.TTColumnData) => events.length > 0)
-    }
-
-    get allDayLocations(){
-        return this.locations.filter((location) => {
-            return location.events.always.length > 0
-        })
     }
 }
 </script>

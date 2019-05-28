@@ -15,7 +15,7 @@
                     :style="columnsStyle">
                 <tt-column
                         v-for="item in columns"
-                        :key="item.location.id"
+                        :key="item.id"
                         :data="item"
                         :time-frame="timeFrame"/>
             </ul>
@@ -39,7 +39,20 @@ export default class TimeTable extends Vue {
     @Prop({type: Array, required: true}) data!: IYC.TimeTableData
 
     get columns(){
-        return this.data.sort((a, b) => a.location.main.id - b.location.main.id)
+        if (this.data[0].location) {
+            return this.data.sort((a, b) => {
+                return (a.location as IYC.Location).main.id - (b.location as IYC.Location).main.id
+            }).map((data: any) => {
+                data.id = data.location.id
+                return data
+            })
+        }
+        else {
+            return this.data.map((data: any) => {
+                data.id = data.day.id
+                return data
+            })
+        }
     }
 
     get timeFrame(){
@@ -55,6 +68,7 @@ export default class TimeTable extends Vue {
             .map((event: IYC.Event) => event.dates[0].timeslot)
             .reduce(reducer, startValues)
 
+        timeFrame.start = Math.floor(timeFrame.start / 4) * 4
         timeFrame.duration = timeFrame.end - timeFrame.start
         return timeFrame
     }
@@ -69,8 +83,8 @@ export default class TimeTable extends Vue {
         const timeMarks: number[] = []
         const {start, end} = this.timeFrame
 
-        for (let slot = start; slot < end; slot += 4) {
-            timeMarks.push(Math.floor(slot / 4))
+        for (let slot = start; slot < end + 4; slot += 4) {
+            timeMarks.push(Math.floor(slot / 4) % 24)
         }
         return timeMarks
     }
@@ -86,13 +100,16 @@ export default class TimeTable extends Vue {
 
 .tt-times-wrapper
     flex: 1 0 auto
-    width: 100px
+    width: 10%
+    min-width: 40px
+    max-width: 100px
     padding: 3rem 0 0
 
 .tt-mark
     position: relative
     display: block
     height: 80px
+    text-align: center
 
     &::before,
     &::after

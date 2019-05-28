@@ -1,10 +1,18 @@
 <template>
     <li class="tt-column">
         <dl>
-            <dt class="location-title">
-                {{ location.main.title.de }}
+            <dt class="tt-column-title">
+                <router-link v-if="day"
+                        :to="{name: 'day', params: {slug: day.slug}}">
+                    {{ day.title.de }}
+                </router-link>
+
+                <router-link v-if="location"
+                        :to="{name: 'location', params: {slug: location.main.slug}}">
+                    {{ location.main.title.de }}
+                </router-link>
                 <span class="location-detail"
-                        v-if="location.detail">
+                        v-if="location && location.detail">
                     {{ location.detail }}
                 </span>
             </dt>
@@ -38,6 +46,10 @@ export default class TtColumn extends Vue {
     get location(){
         return this.data.location
     }
+
+    get day(){
+        return this.data.day
+    }
 }
 </script>
 
@@ -53,7 +65,7 @@ export default class TtColumn extends Vue {
         flex-direction: column
         height: 100%
 
-.location-title
+.tt-column-title
     height: 3rem
     text-align: left
 
@@ -61,7 +73,10 @@ export default class TtColumn extends Vue {
     display: block
 
 .tt-column-events
-    position: relative
     flex: 1 0 auto
     margin: 0
+
+    ul
+        position: relative
+        height: 100%
 </style>

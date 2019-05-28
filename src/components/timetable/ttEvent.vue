@@ -1,6 +1,8 @@
 <template>
     <li class="tt-event" :style="style">
-        <span>{{ event.title }}</span>
+        <router-link :to="{name: 'detail', params: {id: event.id}}">
+            {{ event.title }}
+        </router-link>
     </li>
 </template>
 
@@ -32,11 +34,11 @@ export default class TtEvent extends Vue {
     position: absolute
     display: block
     width: 100%
-    background: #999
+    background: $color-event-link-background
 
-    span
+    a
         display: block
-        max-height: 100%
+        height: 100%
         padding: 5px
         overflow: hidden
         text-overflow: ellipsis

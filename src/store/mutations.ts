@@ -1,6 +1,9 @@
 import { saveEvent } from '@/io/storage'
 
 export const mutations = {
+    initialized: (state: any, initialized: boolean) => {
+        state.initialized = initialized
+    },
     events: (state: any, eventData: IYC.Event[]) => {
         const stEvents = state.events as IYC.Event[]
         const stLocations = state.locations as IYC.Location[]

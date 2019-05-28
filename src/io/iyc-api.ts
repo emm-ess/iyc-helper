@@ -2,6 +2,7 @@ import axios from 'axios'
 import cheerio from 'cheerio'
 
 import {
+    getDateId,
     convertCategory,
     convertLocation,
     convertTimeslot,
@@ -63,16 +64,6 @@ function consolidateEvents(rawEvents: IYC.RawEvent[]): IYC.Event[]{
         const event = events.find((ev) => ev.id === id)
 
         if (event) {
-            const mainLanguage = rawEvent.languages[0]
-            const oldSynopsis = event.synopsis.find((syn) => syn.language === mainLanguage)
-
-            if (!oldSynopsis) {
-                event.synopsis.push({
-                    language: mainLanguage,
-                    text: rawEvent.synopsis,
-                })
-            }
-
             event.dates.push(getDate(rawEvent))
         }
         else {
@@ -87,17 +78,13 @@ function transformEvent(event: IYC.RawEvent): IYC.Event{
         id: event.id,
         title: event.title,
         category: event.category,
-        synopsis: [{
-            language: event.languages[0],
-            text: event.synopsis,
-        }],
-        speaker: event.speaker,
         dates: [getDate(event)],
     }
 }
 
-function getDate({ timeslot, languages, location, booking }: IYC.RawEvent): IYC.EventDate{
-    return { timeslot, languages, location, booking }
+function getDate({ timeslot, languages, location, booking, synopsis, speaker }: IYC.RawEvent): IYC.EventDate{
+    const id = getDateId(location, timeslot)
+    return { id, timeslot, languages, location, booking, synopsis, speaker }
 }
 
 function getHTML(ele: CheerioElement, selector?: string): string{

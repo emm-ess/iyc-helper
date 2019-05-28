@@ -5,6 +5,7 @@ const events = getAllEvents()
 const locations = getLocations(events)
 
 export const state = {
+    initialized: false,
     events,
     locations,
 }

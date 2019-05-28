@@ -3,11 +3,6 @@ declare namespace IYC {
         id: number
         title: string
         category: Category
-        synopsis: [{
-            language: Language
-            text: string
-        }]
-        speaker?: string
         dates: EventDate[]
     }
 
@@ -15,11 +10,6 @@ declare namespace IYC {
         id: number
         title: string
         category: number
-        synopsis: [{
-            language: Language
-            text: string
-        }]
-        speaker?: string
         dates: SerializedEventDate[]
     }
 
@@ -36,10 +26,13 @@ declare namespace IYC {
     }
 
     interface EventDate {
+        id: number
         timeslot?: Timeslot
         languages: Language[]
         location: Location
         booking: BookingInfo
+        synopsis: string
+        speaker?: string
     }
 
     interface SerializedEventDate {
@@ -47,6 +40,11 @@ declare namespace IYC {
         languages: Language[]
         location: SerializedLocation
         booking: BookingInfo
+        synopsis: [{
+            language: Language
+            text: string
+        }]
+        speaker?: string
     }
 
     interface Timeslot {
@@ -87,7 +85,9 @@ declare namespace IYC {
 
     interface MainLocation {
         id: number
+        slug: string
         title: TranslatedString
+        single: boolean
     }
 
     interface LocationMapper {
@@ -112,6 +112,7 @@ declare namespace IYC {
 
     interface Day {
         id: number
+        slug: string
         date: string
         title: TranslatedString
     }
@@ -119,7 +120,8 @@ declare namespace IYC {
     type TimeTableData = TTColumnData[]
 
     interface TTColumnData {
-        location: IYC.Location
+        location?: IYC.Location
+        day?: IYC.Day
         events: IYC.Event[]
     }
 

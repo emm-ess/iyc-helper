@@ -6,6 +6,7 @@ import {
     LOCATION_MAPPER,
     DAYS,
     DEFAULT_CATEGORY,
+    MAX_TIME_SLOTS_DAY,
 } from '@/constants'
 import { hash } from '@/lib/helper'
 
@@ -19,10 +20,12 @@ export function deserialize(serialized: IYC.SerializedEvent): IYC.Event{
     return event
 }
 
-function deserializeDates(serialized: IYC.SerializedEventDate){
+function deserializeDates(serialized: IYC.SerializedEventDate): IYC.EventDate{
     const date: any = {
         languages: serialized.languages,
         booking: serialized.booking,
+        speaker: serialized.speaker,
+        synopsis: serialized.synopsis,
     }
 
     const location = serialized.location
@@ -35,6 +38,7 @@ function deserializeDates(serialized: IYC.SerializedEventDate){
     }
 
     date.timeslot = deserializeTimeslot(serialized.timeslot)
+    date.id = getDateId(date.location, date.timeslot)
     return date
 }
 
@@ -57,10 +61,12 @@ export function serialize(event: IYC.Event): IYC.SerializedEvent{
     return serialized
 }
 
-function serializeDates(date: IYC.EventDate){
+function serializeDates(date: IYC.EventDate): IYC.SerializedEventDate{
     const serialized: any = {
         languages: date.languages,
         booking: date.booking,
+        synopsis: date.synopsis,
+        speaker: date.speaker,
     }
 
     const location = date.location
@@ -84,6 +90,16 @@ function serializeTimeslot(timeslot?: IYC.Timeslot){
         start: timeslot.start,
         end: timeslot.end,
     }
+}
+
+export function getDateId(location: IYC.Location, timeslot?: IYC.Timeslot){
+    let id = location.id
+    if (timeslot) {
+        id += timeslot.day.id
+        id += timeslot.start
+        id += timeslot.end
+    }
+    return id
 }
 
 export function convertCategory(catId: number){
@@ -160,7 +176,8 @@ function convertTimeToSlot(h: string|number, m: string|number){
     if (typeof m === 'string') {
         m = parseInt(m)
     }
-    return Math.round(h * 4 + (m / 15))
+    const slot = Math.round(h * 4 + (m / 15))
+    return slot < 28 ? slot + MAX_TIME_SLOTS_DAY : slot
 }
 
 function convertSlotToTime(day: IYC.Day, slot: number){
