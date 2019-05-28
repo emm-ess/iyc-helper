@@ -68,6 +68,10 @@ module.exports = {
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/explicit-member-accessibility': 'off',
         '@typescript-eslint/no-use-before-define': 'off',
+        '@typescript-eslint/member-delimiter-style': ['error', {
+            multiline: {delimiter: 'none'},
+            singleline: {delimiter: 'comma'}
+        }],
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     },
 

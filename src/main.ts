@@ -4,8 +4,6 @@ import router from './router'
 import store from './store/store'
 import './registerServiceWorker'
 
-import { getEvents } from '@/api/iyc-api'
-
 Vue.config.productionTip = false
 
 new Vue({
@@ -14,8 +12,8 @@ new Vue({
     render: h => h(App),
 }).$mount('#app')
 
-async function test(){
-    const events = await getEvents()
-    console.log(events)
-}
-test()
+// async function test(){
+//     const events = await getIycData()
+//     console.log(events)
+// }
+// test()

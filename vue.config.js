@@ -1,4 +1,5 @@
 const StyleLintPlugin = require('stylelint-webpack-plugin')
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
 
 module.exports = {
     assetsDir: 'static/',
@@ -72,6 +73,9 @@ module.exports = {
             new StyleLintPlugin({
                 fix: false,
                 files: ['src/**/*.{vue,htm,html,css,sss,less,scss,sass}'],
+            }),
+            new MomentLocalesPlugin({
+                localesToKeep: ['es', 'de'],
             }),
         ],
     },

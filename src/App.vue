@@ -8,6 +8,21 @@
   </div>
 </template>
 
+
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+import { Action } from 'vuex-class'
+
+@Component
+export default class Home extends Vue {
+    @Action fetchIycData!: VoidFunction
+
+    created(){
+        this.fetchIycData()
+    }
+}
+</script>
+
 <style lang="sass">
 #app
     color: #2c3e50

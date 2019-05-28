@@ -11,12 +11,14 @@
         "axios": "^0.18.0",
         "cheerio": "^1.0.0-rc.3",
         "core-js": "^2.6.5",
+        "moment": "^2.24.0",
         "register-service-worker": "^1.6.2",
         "vue": "^2.6.10",
         "vue-class-component": "^7.1.0",
         "vue-property-decorator": "^8.1.1",
         "vue-router": "^3.0.6",
-        "vuex": "^3.1.1"
+        "vuex": "^3.1.1",
+        "vuex-class": "^0.3.2"
     },
     "devDependencies": {
         "@ascendancyy/vue-cli-plugin-stylelint": "^1.1.2",
@@ -35,6 +37,7 @@
         "husky": "^2.3.0",
         "jpegoptim-bin": "^5.1.0",
         "lint-staged": "^8.1.7",
+        "moment-locales-webpack-plugin": "^1.0.7",
         "node-sass": "^4.12.0",
         "optipng-bin": "^6.0.0",
         "postcss-clean": "^1.1.0",

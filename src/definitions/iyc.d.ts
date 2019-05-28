@@ -1,37 +1,111 @@
 declare namespace IYC {
     interface Event {
-        title: string;
-        language: string;
-        date?: EventDate;
-        category: Category;
-        synopsis: string;
-        speaker: string;
-        location: Location;
-        booking: BookingInfo;
+        id: number
+        title: string
+        category: Category
+        synopsis: [{
+            language: Language
+            text: string
+        }]
+        speaker?: string
+        dates: EventDate[]
     }
 
-    interface Language {
-        id: number;
-        title: string;
+    interface SerializedEvent {
+        id: number
+        title: string
+        category: number
+        synopsis: [{
+            language: Language
+            text: string
+        }]
+        speaker?: string
+        dates: SerializedEventDate[]
+    }
+
+    interface RawEvent {
+        id: number
+        title: string
+        languages: Language[]
+        timeslot?: Timeslot
+        category: Category
+        synopsis: string
+        speaker?: string
+        location: Location
+        booking: BookingInfo
     }
 
     interface EventDate {
-        day: any;
-        start: any;
-        end: any;
+        timeslot?: Timeslot
+        languages: Language[]
+        location: Location
+        booking: BookingInfo
+    }
+
+    interface SerializedEventDate {
+        timeslot?: SerializedTimeSlot
+        languages: Language[]
+        location: SerializedLocation
+        booking: BookingInfo
+    }
+
+    interface Timeslot {
+        day: Day
+        start: any
+        end: any
+    }
+
+    interface SerializedTimeSlot {
+        day: number
+        start: string
+        end: string
     }
 
     interface Category {
-        id: number;
-        title: string;
+        id: number
+        title: TranslatedString
     }
 
+    type Language = 'DE' | 'EN' | 'FR' | 'RU' | 'ES' | 'IT'
+
     interface Location {
-        id: number;
-        title: string;
+        main: MainLocation
+        detail?: string
+    }
+
+    interface SerializedLocation {
+        main: number
+        detail?: string
+    }
+
+    interface MainLocation {
+        id: number
+        title: TranslatedString
+    }
+
+    interface LocationMapper {
+        id: number
+        regex: TranslatedRegex
     }
 
     interface BookingInfo {
-        required: boolean;
+        required: boolean
+        full: boolean
+        bookingId?: string
+    }
+
+    interface TranslatedString {
+        en: string
+        de: string
+    }
+
+    interface TranslatedRegex {
+        de: RegExp
+    }
+
+    interface Day {
+        id: number
+        date: string
+        title: TranslatedString
     }
 }
