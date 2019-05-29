@@ -15,6 +15,7 @@
         "register-service-worker": "^1.6.2",
         "vue": "^2.6.10",
         "vue-class-component": "^7.1.0",
+        "vue-meta": "^1.6.0",
         "vue-property-decorator": "^8.1.1",
         "vue-router": "^3.0.6",
         "vuex": "^3.1.1",
@@ -110,7 +111,8 @@
             "selector-no-qualifying-type": null,
             "max-empty-lines": 3,
             "no-descending-specificity": null,
-            "font-family-no-missing-generic-family-keyword": null
+            "font-family-no-missing-generic-family-keyword": null,
+            "declaration-block-semicolon-newline-after": null
         },
         "root": true
     }

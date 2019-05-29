@@ -9,6 +9,8 @@
 licenses
 .tmp
 *.rsls
+Imprint.vue
+Privacy.vue
 
 ## ------------------------ Node + Runtime
 node_modules/

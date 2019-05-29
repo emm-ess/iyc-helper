@@ -1,2 +1,6 @@
 User-agent: *
-Disallow:
+Disallow: /privacy
+Disallow: /imprint
+
+Noindex: /privacy
+Noindex: /imprint

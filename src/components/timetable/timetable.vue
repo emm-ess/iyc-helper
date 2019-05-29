@@ -103,7 +103,7 @@ export default class TimeTable extends Vue {
     margin: 3rem -50vw 5rem
 
 .tt-times-wrapper
-    flex: 1 0 auto
+    flex: 1 1 auto
     width: 10%
     min-width: 40px
     max-width: 100px
@@ -134,7 +134,6 @@ export default class TimeTable extends Vue {
 
 .tt-columns-wrapper
     flex: 0 1 auto
-    width: calc(100% - 100px)
     overflow: auto
 
 .tt-columns

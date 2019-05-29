@@ -8,13 +8,13 @@
             </div>
             <nav id="nav" class="container">
                 <ul>
-                    <li><router-link to="/">Home</router-link></li>
-                    <li><router-link to="/day/donnerstag">Donnerstag</router-link></li>
-                    <li><router-link to="/day/freitag">Freitag</router-link></li>
-                    <li><router-link to="/day/samstag">Samstag</router-link></li>
-                    <li><router-link to="/day/sonntag">Sonntag</router-link></li>
-                    <li><router-link to="/events/permanent">Dauerveranstaltungen</router-link></li>
-                    <li><router-link to="/events">Alle Veranstaltungen</router-link></li>
+                    <li><router-link @click="closeNav" to="/">Home</router-link></li>
+                    <li><router-link @click="closeNav" to="/day/donnerstag">Donnerstag</router-link></li>
+                    <li><router-link @click="closeNav" to="/day/freitag">Freitag</router-link></li>
+                    <li><router-link @click="closeNav" to="/day/samstag">Samstag</router-link></li>
+                    <li><router-link @click="closeNav" to="/day/sonntag">Sonntag</router-link></li>
+                    <li><router-link @click="closeNav" to="/events/permanent">Dauerveranstaltungen</router-link></li>
+                    <li><router-link @click="closeNav" to="/events">Alle Veranstaltungen</router-link></li>
                 </ul>
             </nav>
         </header>
@@ -25,9 +25,9 @@
 
         <footer id="footer">
             <ul>
-                <li><router-link to="/about">Über diese Seite</router-link></li>
-                <li><router-link to="/imprint">Impressum</router-link></li>
-                <li><router-link to="/privacy">Datenschutz</router-link></li>
+                <li><router-link to="/about" rel=”nofollow”>Über diese Seite</router-link></li>
+                <li><router-link to="/imprint" rel=”nofollow”>Impressum</router-link></li>
+                <li><router-link to="/privacy" rel=”nofollow”>Datenschutz</router-link></li>
             </ul>
         </footer>
     </div>
@@ -43,6 +43,10 @@ export default class Home extends Vue {
 
     toggleNav(){
         this.open = !this.open
+    }
+
+    closeNav(){
+        this.open = false
     }
 }
 </script>
@@ -94,12 +98,12 @@ export default class Home extends Vue {
 
 #content-wrapper
     flex: 1 0 auto
-    margin-bottom: 60px
     padding-bottom: 30px
 
 #footer
     margin: 2em 0 0
-    padding: 0 20px
+    padding: 0 20px 80px
+    background: #f0f0f0
 
     ul
         display: flex
@@ -122,9 +126,11 @@ export default class Home extends Vue {
 
     #content-wrapper
         margin-top: 60px
-        margin-bottom: 0
         padding-top: 30px
         padding-bottom: 0
+
+    #footer
+        padding-bottom: 20px
 
 +breakpoint-up(lg)
     #header

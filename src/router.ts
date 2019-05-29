@@ -57,7 +57,17 @@ const router = new Router({
         {
             path: '/about',
             name: 'about',
-            component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue'),
+            component: () => import(/* webpackChunkName: "other" */ '@/views/About.vue'),
+        },
+        {
+            path: '/privacy',
+            name: 'privacy',
+            component: () => import(/* webpackChunkName: "other" */ '@/views/Privacy.vue'),
+        },
+        {
+            path: '/imprint',
+            name: 'imprint',
+            component: () => import(/* webpackChunkName: "other" */ '@/views/Imprint.vue'),
         },
         {
             path: '*',
