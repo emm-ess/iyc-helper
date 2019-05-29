@@ -29,7 +29,8 @@ module.exports = {
         workboxPluginMode: 'GenerateSW',
         workboxOptions: {
             importWorkboxFrom: 'local',
-            // swSrc: 'service-worker.js',
+            skipWaiting: true,
+            clientsClaim: true,
         },
     },
 
