@@ -167,7 +167,7 @@ $border-width: 2px
 
 .tt-times-wrapper
     position: relative
-    flex: 1 1 auto
+    flex: 0 0 auto
     width: 10%
     min-width: 40px
     max-width: 100px
