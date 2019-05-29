@@ -99,6 +99,8 @@ declare namespace IYC {
         required: boolean
         full: boolean
         bookingId?: string
+        reserved: boolean
+        bookmarked: boolean
     }
 
     interface TranslatedString {

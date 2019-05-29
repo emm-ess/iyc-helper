@@ -8,6 +8,21 @@ export function filterByDay(events: IYC.Event[], day: IYC.Day | number){
     })
 }
 
+export function filterByDayLocation(events: IYC.Event[], day: IYC.Day | number, location: IYC.Location | number){
+    day = typeof day === 'number' ? day : day.id
+    location = typeof location === 'number' ? location : location.id
+
+    return events.map((event) => {
+        const newEvent = Object.assign({}, event)
+        newEvent.dates = event.dates.filter((date) => {
+            const byDay = !!date.timeslot && date.timeslot.day.id === day
+            const byLocation = date.location.id === location
+            return byDay && byLocation
+        })
+        return newEvent
+    }).filter(({dates}) => dates.length > 0)
+}
+
 // export function filterByLocation(events: IYC.Event[], location: IYC.Location){
 //     const locationId = location.id
 //     return events.filter((event) => {

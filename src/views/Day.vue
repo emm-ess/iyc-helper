@@ -10,7 +10,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
 
 import { DAYS } from '@/constants'
-import { filterByDay } from '@/lib/iyc-event-filter'
+import { filterByDayLocation } from '@/lib/iyc-event-filter'
 
 import TimeTable from '@/components/timetable/timetable.vue'
 
@@ -56,7 +56,7 @@ export default class Day extends Vue {
         return this.locations.map((location) => {
             return {
                 location,
-                events: filterByDay(location.events.specific, this.day as IYC.Day),
+                events: filterByDayLocation(location.events.specific, this.day as IYC.Day, location),
             }
         }).filter(({events}: IYC.TTColumnData) => events.length > 0)
     }

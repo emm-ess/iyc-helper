@@ -186,3 +186,25 @@ function convertSlotToTime(day: IYC.Day, slot: number){
     const m = Math.round((slot - (h * 4)) * 15)
     return (moment as any)(`${day.date} ${h}.${m}`, DATE_FORMAT)
 }
+
+
+export function mergeEvents(oldEvent: IYC.Event, newEvent: IYC.Event){
+    oldEvent.title = newEvent.title
+    const oldDates = oldEvent.dates
+
+    newEvent.dates.forEach((newDate) => {
+        const oldDate = oldDates.find((item) => item.id === newDate.id)
+
+        if (oldDate) {
+            const tmp = Object.assign({}, oldDate, newDate)
+            tmp.booking = oldDate.booking
+            tmp.booking.full = newDate.booking.full
+            Object.assign(oldDate, tmp)
+        }
+        else {
+            oldDates.push(newDate)
+        }
+    })
+
+    return oldEvent
+}

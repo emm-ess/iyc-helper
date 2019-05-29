@@ -97,11 +97,11 @@ export default class IycHeader extends Vue {
         margin: 1.2em 0
 
     a
-        color: #2c3e50
+        color: $color-link
         font-weight: bold
 
         &.router-link-exact-active
-            color: #42b983
+            color: $green
 
 +breakpoint-up(lg)
     .header

@@ -39,6 +39,7 @@ export default class TimeTable extends Vue {
     @Prop({type: Array, required: true}) data!: IYC.TimeTableData
 
     get columns(){
+        console.log(this.data)
         if (this.data[0].location) {
             return this.data.sort((a, b) => {
                 return (a.location as IYC.Location).main.id - (b.location as IYC.Location).main.id

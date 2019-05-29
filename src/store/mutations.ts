@@ -1,3 +1,5 @@
+import { mergeEvents } from '@/io/iyc-event-converter'
+
 import { saveEvent } from '@/io/storage'
 
 export const mutations = {
@@ -14,7 +16,8 @@ export const mutations = {
             let event: IYC.Event
 
             if (oldEvent) {
-                event = Object.assign(oldEvent, newEvent)
+                mergeEvents(oldEvent, newEvent)
+                event = oldEvent
             }
             else {
                 stEvents.push(newEvent)
@@ -43,6 +46,9 @@ export const mutations = {
                 }
             })
         })
+    },
+    updateEvent: (state: any, event: IYC.Event) => {
+        saveEvent(event)
     },
 }
 

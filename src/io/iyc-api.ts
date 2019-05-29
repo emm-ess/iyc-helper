@@ -155,27 +155,29 @@ function getLocation(ele: CheerioElement): IYC.Location{
 function getBookingInfo(ele: CheerioElement){
     const html = getHTML(ele)
     const matches = REGEXS.booking.exec(html)
+    const booking: IYC.BookingInfo = {
+        required: false,
+        full: false,
+        bookmarked: false,
+        reserved: false,
+    }
     if (!matches || matches.length < 4) {
-        return {
-            required: false,
-            full: false,
-        }
+        return booking
     }
 
     switch (matches[1]) {
         case 'a':
             const idMatch = REGEXS.bookingID.exec(matches[2])
-            return {
-                required: true,
-                full: false,
-                bookingId: idMatch ? idMatch[1] : undefined,
-            }
+            booking.required = true
+            booking.full = false
+            booking.bookingId = idMatch ? idMatch[1] : undefined
+            break
         case 'span':
-            return {
-                required: true,
-                full: true,
-            }
+            booking.required = true
+            booking.full = true
+            break
         default:
             throw new Error(`Couldn't parse event booking info: ${html}`)
     }
+    return booking
 }
