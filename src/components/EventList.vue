@@ -39,13 +39,9 @@ export default class EventList extends Vue {
     flex-flow: row wrap
     margin: 0 -.6em 2em
 
-    li
-        position: relative
-        display: block
+    .event-nugget
         margin: .6em
         padding: .6em
-        overflow: hidden
-        background: $color-btn-background
         border-radius: .3em
 
         &.required

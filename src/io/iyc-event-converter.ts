@@ -197,6 +197,8 @@ export function mergeEvents(oldEvent: IYC.Event, newEvent: IYC.Event){
 
         if (oldDate) {
             const tmp = Object.assign({}, oldDate, newDate)
+            tmp.booking.reserved = !!tmp.booking.reserved
+            tmp.booking.bookmarked = !!tmp.booking.bookmarked
             tmp.booking = oldDate.booking
             tmp.booking.full = newDate.booking.full
             Object.assign(oldDate, tmp)

@@ -12,6 +12,10 @@
                 :key="date.id"
                 :event="event"
                 :date="date" />
+
+        <div class="disclaimer">
+            <p>Denke bitte daran, dass eine Markierung als reserviert in dieser WebApp keine Reservierung im System des IJT darstellt. Die Markierung dient nur dazu, damit du es dir hier merken kannst.</p>
+        </div>
     </div>
 </template>
 
@@ -70,4 +74,9 @@ export default class Detail extends Vue {
 .notice-multiple
     margin: 40px 0
     font-weight: $font-weight-bold
+
+.disclaimer
+    margin: 60px 0 0
+    @extend %font-small-1
+
 </style>

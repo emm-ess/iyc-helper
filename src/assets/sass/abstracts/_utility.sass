@@ -40,3 +40,29 @@
 
 %sr-only-focusable
     +sr-only-focusable
+
+%event-nugget
+    position: relative
+    display: block
+    overflow: hidden
+    background: $color-btn-background
+
+    &.required
+        &::before
+            position: absolute
+            top: -2px
+            left: -2px
+            display: block
+            content: ''
+            width: 4px
+            height: calc(100% + 4px)
+            background: $color-required
+
+        &.full:not(.reserved)::before
+            background: $color-full
+
+        &.reserved::before
+            background: $color-reserved
+
+    &.bookmarked
+        background: $color-bookmarked !important

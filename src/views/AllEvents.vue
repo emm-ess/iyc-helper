@@ -12,6 +12,17 @@
 
             <event-list :events="sortEvents(location.events)" />
         </div>
+
+        <div class="legend">
+            <h3>Legende</h3>
+            <div class="legend-content">
+                <span class="event event-nugget">Veranstaltung</span>
+                <span class="event event-nugget required">Anmeldung benötigt</span>
+                <span class="event event-nugget required full">ausgebucht</span>
+                <span class="event event-nugget required reserved">als reserviert markiert</span>
+                <span class="event event-nugget bookmarked">gemerkt</span>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -38,3 +49,25 @@ export default class Permanent extends Vue {
     }
 }
 </script>
+
+
+<style lang="sass" scoped>
+.legend
+    margin: 60px 0 0
+
+.legend-content
+    display: flex
+    flex-flow: row wrap
+    margin: 0 -.6em
+
+    .event-nugget
+        margin: .6em
+        padding: .6em
+        border-radius: .3em
+
+        &.required
+            &::before
+                top: 0
+                left: 0
+                height: 100%
+</style>

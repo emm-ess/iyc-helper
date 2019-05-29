@@ -12,6 +12,13 @@ export const getters = {
         const stLocation = state.locations.find((loc: IYC.Location) => loc.id === location)
         return filterByDay(stLocation.events, day)
     },
+    bookmarkedEvents: ({events}: any) => {
+        return events.map((event: IYC.Event) => {
+            const newEvent = Object.assign({}, event)
+            newEvent.dates = event.dates.filter((date) => date.booking.bookmarked)
+            return newEvent
+        }).filter(({dates}: IYC.Event) => dates.length > 0)
+    },
 
     getLocationById: (state: any) => (id: number) => {
         return state.locations.find((location: IYC.Location) => location.id === id)

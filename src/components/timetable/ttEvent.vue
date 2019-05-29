@@ -40,26 +40,8 @@ export default class TtEvent extends Vue {
 
 
 <style scoped lang="sass">
-$light-border: tint($color-btn-background, 10%)
-$dark-border: shade($color-btn-background, 10%)
-
-$marked-color: tint($green, 60%)
-$light-border-marked: tint($marked-color, 10%)
-$dark-border-marked: shade($marked-color, 10%)
-
-
-$border-width: 2px
-
 .tt-event
     position: absolute
-    display: block
-    width: 100%
-    background: $color-btn-background
-    border: $border-width solid
-    border-color: $light-border $dark-border $dark-border $light-border
-
-    &.bookmarked
-        border-color: $light-border-marked $dark-border-marked $dark-border-marked $light-border-marked
 
     a
         display: block
