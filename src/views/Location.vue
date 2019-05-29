@@ -32,18 +32,31 @@ export default class Location extends Vue {
     @Prop({type: String, required: true}) slug!: string
     @Getter getDetailLocations!: any
 
-    location!: IYC.MainLocation
+    location: IYC.MainLocation | null = null
 
     created(){
+        if (!this.setLocation(this.slug)) {
+            this.$router.replace('/')
+        }
+    }
+
+    beforeRouteUpdate(to: any, from: any, next: any){
+        if (this.setLocation(to.params.slug)) {
+            next()
+        }
+        else {
+            next('/')
+        }
+    }
+
+    setLocation(slug: string){
         const location = MAIN_LOCATIONS.find((location) => {
-            return location.slug === this.slug
+            return location.slug === slug
         })
         if (location) {
             this.location = location
         }
-        else {
-            this.$router.replace('/')
-        }
+        return !!location
     }
 
     get ttDataSingle(){

@@ -4,7 +4,7 @@
 
         <p v-if="!single"
                 class="notice-multiple">
-            Diese Veranstaltung findet mehrmals statt.
+            Diese Veranstaltung findet mehrmals statt:
         </p>
 
         <event-date-detail
@@ -29,18 +29,45 @@ import EventDateDetail from '@/components/EventDateDetail.vue'
 export default class Detail extends Vue {
     @Prop({type: Number, required: true}) id!: any
     @Getter getEventById!: any
-    event!: IYC.Event
+
+    event: IYC.Event | null = null
 
     created(){
-        this.event = this.getEventById(this.id)
+        if (!this.setEvent(this.id)) {
+            this.$router.replace('/')
+        }
+    }
+
+    beforeRouteUpdate(to: any, from: any, next: any){
+        if (this.setEvent(to.params.id)) {
+            next()
+        }
+        else {
+            next('/')
+        }
+    }
+
+    setEvent(id: number){
+        const event = this.getEventById(id)
+        if (event) {
+            this.event = event
+        }
+        return !!event
     }
 
     get single(){
-        return this.event.dates.length === 1
+        return this.event && this.event.dates.length === 1
     }
 
     get singleDate(){
-        return this.event.dates[0]
+        return this.event ? this.event.dates[0] : null
     }
 }
 </script>
+
+
+<style lang="sass" scoped>
+.notice-multiple
+    margin: 40px 0
+    font-weight: $font-weight-bold
+</style>

@@ -3,8 +3,7 @@
         <div class="info">
             <span class="location">
                 <router-link :to="{name: 'location', params: {slug: mainLocation.slug}}">
-                    {{ mainLocation.title.de }}
-                </router-link>
+                    {{ mainLocation.title.de }}</router-link>
                 <span class="detail"
                         v-if="date.location.detail">
                     {{ date.location.detail}}
@@ -15,8 +14,7 @@
                     v-if="timeslot">
                 |
                 <router-link :to="{name: 'day', params: {slug: timeslot.day.slug}}">
-                    {{ timeslot.day.title.de }}
-                </router-link>
+                    {{ timeslot.day.title.de }}</router-link>
                 {{ formatTime(timeslot.startTime) }} - {{ formatTime(timeslot.endTime) }}
             </span>
         </div>
@@ -55,6 +53,18 @@ export default class EventDateDetail extends Vue {
 
 
 <style scoped lang="sass">
+.event-occurence + .event-occurence
+    margin: 40px 0 0
+    padding: 40px 0 0
+    border-top: 1px solid #f0f0f0
+
+
+h1
+    margin-bottom: 30px
+
 .info
-    margin: 0 0 1.2em
+    margin: 0 0 1.8em
+
+a
+    text-decoration: underline
 </style>

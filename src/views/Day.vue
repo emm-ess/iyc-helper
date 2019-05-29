@@ -23,16 +23,29 @@ export default class Day extends Vue {
     @Prop({type: String, required: true}) slug!: string
     @Getter getLocationsForDay!: any
 
-    day!: IYC.Day
+    day: IYC.Day | null = null
 
     created(){
-        const day = DAYS.find((day) => day.slug === this.slug)
+        if (!this.setDay(this.slug)) {
+            this.$router.replace('/')
+        }
+    }
+
+    beforeRouteUpdate(to: any, from: any, next: any){
+        if (this.setDay(to.params.slug)) {
+            next()
+        }
+        else {
+            next('/')
+        }
+    }
+
+    setDay(slug: string){
+        const day = DAYS.find((day) => day.slug === slug)
         if (day) {
             this.day = day
         }
-        else {
-            this.$router.replace('/')
-        }
+        return !!day
     }
 
     get locations(): IYC.Location[]{
@@ -43,7 +56,7 @@ export default class Day extends Vue {
         return this.locations.map((location) => {
             return {
                 location,
-                events: filterByDay(location.events.specific, this.day),
+                events: filterByDay(location.events.specific, this.day as IYC.Day),
             }
         }).filter(({events}: IYC.TTColumnData) => events.length > 0)
     }

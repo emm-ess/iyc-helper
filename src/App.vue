@@ -1,23 +1,6 @@
 <template>
     <div id="app">
-        <header id="header" :class="{open}">
-            <div class="nav-toggle-wrapper container">
-                <button @click.prevent="toggleNav">
-                    Menu
-                </button>
-            </div>
-            <nav id="nav" class="container">
-                <ul>
-                    <li><router-link @click="closeNav" to="/">Home</router-link></li>
-                    <li><router-link @click="closeNav" to="/day/donnerstag">Donnerstag</router-link></li>
-                    <li><router-link @click="closeNav" to="/day/freitag">Freitag</router-link></li>
-                    <li><router-link @click="closeNav" to="/day/samstag">Samstag</router-link></li>
-                    <li><router-link @click="closeNav" to="/day/sonntag">Sonntag</router-link></li>
-                    <li><router-link @click="closeNav" to="/events/permanent">Dauerveranstaltungen</router-link></li>
-                    <li><router-link @click="closeNav" to="/events">Alle Veranstaltungen</router-link></li>
-                </ul>
-            </nav>
-        </header>
+        <iyc-header />
 
         <div class="container" id="content-wrapper">
             <router-view/>
@@ -37,18 +20,14 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 
-@Component
-export default class Home extends Vue {
-    open = false
+import IycHeader from '@/components/IycHeader.vue'
 
-    toggleNav(){
-        this.open = !this.open
-    }
-
-    closeNav(){
-        this.open = false
-    }
-}
+@Component({
+    components: {
+        IycHeader,
+    },
+})
+export default class App extends Vue {}
 </script>
 
 <style lang="sass">
@@ -57,44 +36,6 @@ export default class Home extends Vue {
     flex-direction: column
     height: 100%
     color: #2c3e50
-
-#header
-    position: fixed
-    bottom: 0
-    left: 0
-    z-index: 400
-    width: 100%
-    padding: 60px 0
-    background: #f0f0f0
-    transform: translateY(100%)
-    transition: transform .6s ease-in-out
-
-    &.open
-        transform: translateY(0)
-
-    .nav-toggle-wrapper
-        position: absolute
-        top: -60px
-        display: flex
-        flex-direction: row
-        justify-content: flex-end
-        align-items: center
-        height: 60px
-        background: #f0f0f0
-
-#nav
-    margin: 1em 0 3em
-
-    li
-        display: block
-        margin: 1.2em 0
-
-    a
-        color: #2c3e50
-        font-weight: bold
-
-        &.router-link-exact-active
-            color: #42b983
 
 #content-wrapper
     flex: 1 0 auto
@@ -109,47 +50,20 @@ export default class Home extends Vue {
         display: flex
         flex-flow: row wrap
         justify-content: flex-end
+        align-items: center
+        height: 100%
         margin: 0 -.6em
 
     li
         margin: .6em
 
 +breakpoint-up(md)
-    #header
-        top: 0
-        bottom: initial
-        transform: translateY(-100%)
-
-        .nav-toggle-wrapper
-            top: initial
-            bottom: -60px
-
     #content-wrapper
         margin-top: 60px
         padding-top: 30px
         padding-bottom: 0
 
     #footer
-        padding-bottom: 20px
-
-+breakpoint-up(lg)
-    #header
-        padding: 0
-        transform: translateY(0)
-
-        .nav-toggle-wrapper
-            display: none
-
-    #nav
         height: 60px
-        margin: 0 auto
-
-        ul
-            display: flex
-            flex-direction: row
-            justify-content: flex-start
-            align-items: center
-
-            li + li
-                margin: 0 0 0 1.5em
+        padding-bottom: 0
 </style>

@@ -135,6 +135,7 @@ export default class TimeTable extends Vue {
 .tt-columns-wrapper
     flex: 0 1 auto
     overflow: auto
+    -webkit-overflow-scrolling: touch
 
 .tt-columns
     display: flex

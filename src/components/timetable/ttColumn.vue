@@ -69,14 +69,20 @@ export default class TtColumn extends Vue {
     height: 3rem
     text-align: left
 
+    a
+        text-decoration: underline
+
 .location-detail
     display: block
 
 .tt-column-events
+    display: flex
     flex: 1 0 auto
+    flex-direction: column
     margin: 0
 
     ul
         position: relative
+        flex: 1 0 auto
         height: 100%
 </style>
