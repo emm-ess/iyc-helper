@@ -20,7 +20,7 @@
             <h1>Programm des IJT 2019</h1>
             <p>Eines direkt als erstes: diese Seite ist in keinster Weise offiziell und steht nicht in Verbindung mit der NAK oder der IJT 2019 Düsseldorf gGmbH. Daher sind Reservierungen oder andere mit einem Login auf ijt2019.org verbundene Aktionen nicht möglich.</p>
             <p>Dies ist ein Versuch, in etwas über 48 Stunden und mit zu wenig Schlaf, eine digitale & offline-fähige Version der Programm-Übersicht zu schaffen. Bis zum IJT sind noch weitere Funktionen, beispielsweise ein Bookmarking-System, geplant. Eine englische Version ist zwar vorbereitet, gestaltet sich auf Grund der Datenlage jedoch als schwierig.</p>
-            <p>Sobald du Veranstaltungen als "gemerkt" markiert hast, werden sie hier erscheinen.</p>
+            <p>Sobald du Veranstaltungen als "gemerkt" markiert hast, werden sie hier erscheinen. Mehr Informationen findest du auf der <router-link to="/about">Seite über dieses Projekt</router-link>.</p>
         </div>
     </div>
 </template>
@@ -46,7 +46,7 @@ import { DAYS } from '@/constants'
 export default class Home extends Vue {
     @Getter bookmarkedEvents!: IYC.Event[]
 
-    selectedDay!: number | null = null
+    selectedDay: number | null = null
 
     get hours(){
         function reducer(acc: number, cur: number){

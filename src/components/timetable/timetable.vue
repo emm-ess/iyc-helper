@@ -8,6 +8,8 @@
                             :key=timeMark>
                         {{ timeMark }}
                     </span>
+
+                    <span class="tt-now-mark" :style="nowMarkerStyles"></span>
                 </div>
             </div>
 
@@ -37,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 import { MAX_TIME_SLOTS_DAY } from '@/constants'
 
@@ -50,6 +52,9 @@ import TtColumn from './ttColumn.vue'
 })
 export default class TimeTable extends Vue {
     @Prop({type: Array, required: true}) data!: IYC.TimeTableData
+
+    nowMarkerStyles: any = {}
+    updateId: any = null
 
     get columns(){
         if (this.data[0].location) {
@@ -102,6 +107,38 @@ export default class TimeTable extends Vue {
         }
         return timeMarks
     }
+
+    created(){
+        this.updateTimeMarker()
+    }
+
+    @Watch('data')
+    changeTimeMarker(){
+        if (this.updateId) {
+            clearInterval(this.updateId)
+            this.updateId = null
+        }
+        this.updateTimeMarker()
+    }
+
+    updateTimeMarker(){
+        const now = new Date()
+        let h = now.getHours()
+        h += h < 6 ? 6 : 0
+        const m = now.getMinutes()
+        const nowSlot = h * 4 + m / 15
+        const { start, end, duration } = this.timeFrame
+
+        if (start <= nowSlot && nowSlot <= end) {
+            this.nowMarkerStyles.display = 'block'
+            this.nowMarkerStyles.top = `${100 * (nowSlot - start) / duration}%`
+        }
+        else {
+            this.nowMarkerStyles.display = 'none'
+        }
+        this.$forceUpdate()
+        this.updateId = setTimeout(this.updateTimeMarker.bind(this), 60000)
+    }
 }
 </script>
 
@@ -129,6 +166,7 @@ $border-width: 2px
     margin: 0 -50vw
 
 .tt-times-wrapper
+    position: relative
     flex: 1 1 auto
     width: 10%
     min-width: 40px
@@ -157,6 +195,26 @@ $border-width: 2px
     &::after
         top: 50%
         background: #999
+
+.tt-now-mark
+    position: absolute
+    right: 10%
+    width: 100vw
+    height: 1px
+    margin-right: -100vw
+    background: $red
+
+    &::before
+        position: absolute
+        top: -2px
+        left: -2px
+        display: block
+        content: ''
+        width: 5px
+        height: 5px
+        overflow: hidden
+        background: $red
+        border-radius: 50%
 
 .tt-columns-wrapper
     flex: 0 1 auto
