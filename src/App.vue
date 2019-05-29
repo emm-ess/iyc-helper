@@ -8,6 +8,7 @@
 
         <footer id="footer">
             <ul>
+                <li><button @click="doUpdate" :disabled="!online">{{ updateBtnText }}</button></li>
                 <li><router-link to="/about" rel=”nofollow”>Über diese Seite</router-link></li>
                 <li><router-link to="/imprint" rel=”nofollow”>Impressum</router-link></li>
                 <li><router-link to="/privacy" rel=”nofollow”>Datenschutz</router-link></li>
@@ -19,6 +20,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { Action } from 'vuex-class'
 
 import IycHeader from '@/components/IycHeader.vue'
 
@@ -27,7 +29,35 @@ import IycHeader from '@/components/IycHeader.vue'
         IycHeader,
     },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+    @Action update!: any
+
+    online: boolean = navigator.onLine
+    updateBtnText: string = 'aktualisieren'
+
+    created(){
+        window.addEventListener('online', this.handleOnline.bind(this))
+        window.addEventListener('offline', this.handleOnline.bind(this))
+    }
+
+    handleOnline(){
+        this.online = navigator.onLine
+    }
+
+    async doUpdate(){
+        if (!navigator.onLine) {
+            return
+        }
+        this.updateBtnText = 'aktualisiere...'
+        await this.update()
+        this.updateBtnText = 'aktualisiert'
+
+        const vm = this
+        setTimeout(() => {
+            vm.updateBtnText = 'aktualisieren'
+        }, 6000)
+    }
+}
 </script>
 
 <style lang="sass">

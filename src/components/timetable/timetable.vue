@@ -117,13 +117,16 @@ $dark-border-marked: shade($marked-color, 10%)
 
 $border-width: 2px
 
+.timetable-wrapper
+    margin: 3rem 0 5rem
+
 .timetable
     position: relative
     left: 50%
     display: flex
     flex-direction: row
     width: 100vw
-    margin: 3rem -50vw 5rem
+    margin: 0 -50vw
 
 .tt-times-wrapper
     flex: 1 1 auto

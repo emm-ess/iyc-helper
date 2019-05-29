@@ -5,9 +5,27 @@ import {
     deserialize,
 } from './iyc-event-converter'
 
+const MAIN_ITEM_KEY = 'iyc_item_'
+const MASTER_ITEM_KEY = 'IYC_ITEMS'
+const items: string[] = retrieve(MASTER_ITEM_KEY) || []
+
 const MAIN_EVENT_KEY = 'iyc_event_'
 const MASTER_EVENT_KEY = 'IYC_EVENTS'
 const events: number[] = retrieve(MASTER_EVENT_KEY) || []
+
+export function getItem(key: string){
+    return retrieve(MAIN_ITEM_KEY + key)
+}
+
+export function saveItem(key: string, value: any){
+    save(MAIN_ITEM_KEY + key, value)
+
+    if (!items.includes(key)) {
+        items.push(key)
+        save(MASTER_ITEM_KEY, events)
+    }
+}
+
 
 
 export function getEvent(id: number){

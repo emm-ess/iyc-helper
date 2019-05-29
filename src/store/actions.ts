@@ -13,6 +13,12 @@ export const actions = {
 
         commit('initialized', true)
     },
+    update: async ({ commit }: any) => {
+        if (navigator.onLine) {
+            const events = await getIycData()
+            commit('events', events)
+        }
+    },
 }
 
 export default actions

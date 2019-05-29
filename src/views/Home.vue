@@ -2,10 +2,11 @@
     <div class="home">
         <div v-if="bookmarkedEvents.length > 0">
             <h1>Dein persönliches IJT Programm</h1>
-            <p>Bisher interessierst du dich für {{ bookmarkedEvents.length }} Veranstaltungen. Das sind über {{ hours }} Stunden!</p>
+            <p>Du interessierst dich für {{ bookmarkedEvents.length }} Veranstaltungen. Das sind über {{ hours }} Stunden!</p>
 
-            <time-table v-if="ttData.length > 0"
-                    :data="ttData"/>
+            <day-select @day="daySelected" />
+
+            <time-table :data="ttData"/>
 
             <div v-if="permanentEvents.length > 0">
                 <h2>
@@ -28,6 +29,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
 
+import DaySelect from '@/components/DaySelect.vue'
 import TimeTable from '@/components/timetable/timetable.vue'
 import EventList from '@/components/EventList.vue'
 
@@ -36,12 +38,15 @@ import { DAYS } from '@/constants'
 
 @Component({
     components: {
+        DaySelect,
         TimeTable,
         EventList,
     },
 })
 export default class Home extends Vue {
     @Getter bookmarkedEvents!: IYC.Event[]
+
+    selectedDay!: number | null = null
 
     get hours(){
         function reducer(acc: number, cur: number){
@@ -57,21 +62,32 @@ export default class Home extends Vue {
         return slotCount / 4
     }
 
-    get ttData(){
+    get ttDataAll(){
         return DAYS.map((day) => {
             return {
                 day,
                 events: filterByDay(this.bookmarkedEvents, day),
             }
-        }).filter(({events}) => {
-            return events.length > 0
         })
+    }
+
+    get ttData(){
+        if (typeof this.selectedDay === 'number') {
+            return this.ttDataAll.filter(({day}) => day.id === this.selectedDay)
+        }
+        else {
+            return this.ttDataAll
+        }
     }
 
     get permanentEvents(){
         return this.bookmarkedEvents.filter(({dates}) => {
             return !dates[0].timeslot
         })
+    }
+
+    daySelected(day: number | null){
+        this.selectedDay = day
     }
 }
 </script>

@@ -42,6 +42,7 @@ export default class EventList extends Vue {
     .event-nugget
         margin: .6em
         padding: .6em
+        overflow: hidden
         border-radius: .3em
 
         &.required
